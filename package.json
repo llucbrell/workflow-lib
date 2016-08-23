@@ -1,0 +1,15 @@
+{
+  "name": "workflow-lib",
+  "version": "0.0.1",
+  "description": "Workflow build with grunt and nodejs for a better build libraries.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "llucbrell/Lucas_C",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt-file-creator": "^0.1.3",
+    "grunt-mkdir": "^1.0.0"
+  }
+}
