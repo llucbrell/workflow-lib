@@ -1,20 +1,50 @@
+
 module.exports = function (grunt) {
-    
     
     // ---------------------- CONSTANT sources  ------------------------------ //
     
-    var initial_directories = ['.tmp', '.tmp/doc', 'test', 'js', 'built'],
+    var initial_directories = ['.tmp', '.tmp/backup', 'test', 'js', 'built', 'built/docs', 'built/js'],
         javascript_to_docs = ['js/**/*.js'],
         javascript_files = ['js/**/*.js', '*.js'],
         destination_docs = ".tmp/doc",
+        all_build_files =  ['*/**', '*','.*.yml', '.*nore', '!built', '!test'],
         build_docs = "built/doc",
+        build_dest = 'built',
+        javascript_built = ['built/js/**/*.js', 'built/*.js'],
+        docs_files = ['built/doc/**.html'],
+        ignore_files = ['built/.gitignore', 'built/.npmignore', 'built/.*.yml'],
+        all_backup_files = ['*/**', '*','.*.yml', '.*nore'],
+        backup_dest = '.tmp/backup',
         
-    // ---------------------- CONSTANT options  ------------------------------ //
+        
+        
+        
+    // ---------------------- CONSTANT task options -------------------------- //
 
         jshint_rules = {laxbreak: true},
         
         
-    // --------------------- TEXT values ------------------------------------- //
+    // ---------------------- HEADER strings -------------------------------- //
+        
+        comment = {html:{open: "<!--", close: "-->"},jscss:{open: "/*", close: "*/"}, sharp:{open:"#"}, js:{open:"//"}},
+        header_logo = 'LOGO +++ \n',        
+        spaces = "                         ",       
+        spaces2 = "       ",        
+        break_lines = "\n\n\n",        
+        end_banner = "|@#~|",        
+        separator = "// ------------------------------------------------------------------ // \n",
+        texted_separator = "// ------------------------- <%= pkg.name %> -------------------------- // ",
+
+        
+        created_info = spaces2 +texted_separator+ '\n'+ spaces2 + '   <%= pkg.description %> \n' +'\n' +  spaces + 'author: <%= pkg.author %> \n' + spaces + 'version: <%= pkg.version %> \n' + spaces + 'built-date: <%= grunt.template.today("yyyy-mm-dd") %> \n'  +spaces + 'license: <%= pkg.license %> \n'+'\n'+spaces2 + separator +'\n',
+        
+        last_built = '<%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> - v<%= pkg.version %> - ',
+        
+        ig_header = spaces2 +texted_separator+ '\n#\n#'+ spaces2 + '   <%= pkg.description %> \n#' +'\n#' +  spaces + 'author: <%= pkg.author %> \n#' + spaces + 'start-date: <%= grunt.template.today("yyyy-mm-dd") %> \n#'  +spaces + 'license: <%= pkg.license %> \n#'+'\n#'+spaces2 + separator +'\n',
+        
+        
+        
+    // --------------------- TEXT files values ------------------------------- //
         
         readme_text = "[comment]: <> (example of image -->   ![](https://raw.githubusercontent.com/llucbrell/audrey2/master/audrey.png)   )" 
                              +"\n"
@@ -36,7 +66,7 @@ module.exports = function (grunt) {
                              +"[comment]: <> (example of link -----> [link](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)           )"
                              +"\n",
         
-        license_text =  "The MIT License"
+        license_text =  "The MIT License\n"
                                 +"==============="
                                 +"\n"
                                 +"Copyright (c) Lucas_C / llucbrell 2015"
@@ -59,7 +89,7 @@ module.exports = function (grunt) {
                                 +"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN"
                                 +"THE SOFTWARE.",
         
-        gitignore_text = "#ignore node modules\n"
+        gitignore_text =  "#ignore node modules\n"
                                 +"node_modules\n"
                                 +"#ignore grunt temporary files\n"
                                 +".tmp\n",
@@ -94,7 +124,8 @@ module.exports = function (grunt) {
     
     // ---------------------------------------------------------------  //
 
-    
+        console.log(comment.html.open);
+
     
     
     // ---------------------- GRUNT CONFIG TASKS ---------------------  //
@@ -112,7 +143,8 @@ module.exports = function (grunt) {
             }
         },
         
-        // building project files  index.js, travis, readme, license, gitignore, npmignore       
+        // building project files  index.js, travis, readme, license, gitignore, npmignore   
+        
           "file-creator": {
             "generate-files": {
               "readme.md": function(fs, fd, done) {
@@ -152,6 +184,7 @@ module.exports = function (grunt) {
         // Documentation generation
         
         jsdoc:{
+            
             // for temporary consult
             "dev-work":{
                 src: javascript_to_docs ,
@@ -188,7 +221,89 @@ module.exports = function (grunt) {
                     fix: true, // Autofix code style violations when possible. 
                     requireCurlyBraces: [ "if" ]
             }
-        }
+        },
+        
+        // create banners for the project
+       
+        usebanner: {
+            "create-javascript-banners": {
+              options: {
+                position: 'top',
+                banner: comment.jscss.open + header_logo + created_info + comment.jscss.close + break_lines + comment.js.open + end_banner,
+                linebreak: true
+              },
+              files: {
+                src: javascript_built,
+              }
+            },
+              
+             "create-ignore-banners": {
+              options: {
+                position: 'top',
+                banner: comment.sharp.open  + ig_header + break_lines,
+                linebreak: true
+              },
+              files: {
+                src: ignore_files
+              }
+            },
+          
+            "create-docs-banners": {
+              options: {
+                position: 'top',
+                banner: comment.html.open + comment.html.close,
+                linebreak: true
+              },
+              files: {
+                src: docs_files
+              }
+            },
+            
+        },
+           
+                     
+        // clean temporary files before make building
+                     
+        clean:{
+            tmp:{
+                src:['.tmp/backup/*']
+            },
+             "last-build":{
+                src:['built/*']
+            },
+        },
+        
+        
+        
+        // make a backup to avoid problems
+          copy: {
+              "backup": {
+                files: [ 
+                         {
+                             expand: true, 
+                             src: all_backup_files , 
+                             dest: backup_dest
+                         },
+                       ]
+              },
+              "build": {
+                files: [ 
+                         {
+                             expand: true, 
+                             src: all_build_files , 
+                             dest: build_dest
+                         },
+                       ]
+              },
+            
+            
+                     
+                     
+            },
+        
+     
+
+       
         
     });
     
@@ -198,11 +313,49 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jscs');
+    grunt.loadNpmTasks('grunt-banner');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     
     
-    // default tasks
-    grunt.registerTask('create', ['mkdir', 'file-creator:generate-files']);
-    grunt.registerTask('work', ['file-creator:gen', 'jsdoc:dev-work', 'jshint:check']);
-    grunt.registerTask('build', ['file-creator:gen', 'jsdoc:dev-build','jshint:check', 'jscs']);
+    
+    // tasks
+    grunt.registerTask('create',
+                       [
+                        'mkdir', 
+                        'file-creator:generate-files',
+                        
+                        
+                        
+                        ]);
+    
+    grunt.registerTask('check', 
+                       [
+                        'jshint:check',
+                        
+                       
+                        ]);
+    
+    grunt.registerTask('backup', 
+                       [
+                        'clean:backup',
+                        'copy:backup'
+                       ]);
+    
+    grunt.registerTask('build', 
+                       [
+                        'jshint:check', 
+                        'jscs', 
+                        'clean:last-build',
+                        'jsdoc:dev-build',
+                        'copy:build',                      
+                        'usebanner'
+                        
+                       ]);
 
 };
+
+
+
+
+
