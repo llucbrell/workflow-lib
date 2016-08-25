@@ -123,12 +123,7 @@ module.exports = function (grunt) {
         
         ; 
     
-    // ------------------- Before Grunt advises -----------------------  //
-
-        console.log(comment.html.open); // audrey logo
-
-    
-    
+   
     // ---------------------- GRUNT CONFIG TASKS ---------------------  //
     grunt.initConfig({
         
@@ -300,6 +295,9 @@ module.exports = function (grunt) {
                        ]
               },                  
             },
+        
+        // shell commands for linux
+        
          shell:{
           "jasmine-CI":{
             command:[
@@ -314,6 +312,16 @@ module.exports = function (grunt) {
         
     });
     
+     // ------------------- Before Grunt advises -----------------------  //
+
+        console.log(comment.html.open); // audrey logo
+                                        // license
+    
+    
+    
+    
+    // --------------------- GRUNT LOAD PLUGGINS ---------------------  //
+
     // load plugin
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-file-creator');
@@ -326,6 +334,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     
     
+    // ------------------------ GRUNT TASKS  ------------------------  //
+  
     // tasks
     grunt.registerTask('create', // generates the library project
                        [
