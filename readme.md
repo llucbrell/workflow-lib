@@ -1,16 +1,11 @@
 #Workflow-lib
-
-
-##Quick start and work for codding libraries
-
-
 For running workflow-lib you must to ensure you know how to work with nodejs, npm and grunt. To start, clone the repository and inicialize some of the dependencies
 ## Building
 Download the code
 ```js
 git clone 
 /* you can ignore the next two lines
-if you have already installed */
+if you have already installed */ 
 npm install -g grunt cli
 npm install -g jasmine
 ```
