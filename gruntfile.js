@@ -11,7 +11,7 @@ module.exports = function (grunt) {
         // used with jshint and jscs
         javascript_files = ['js/**/*.js', '*.js', 'test', 'test/*/**'],
         // used when copy for a built construction
-        all_build_files =  ['*/**', '*', '!built', '!doc', '!test', '!gruntfile.js','!package.json','!.gitignore', '!.npmignore', '!spec', '!*.yml'],
+        all_build_files =  ['*/**', '*', '!built','!built/*', '!built/*/**', '!doc', '!test', '!gruntfile.js','!package.json','!.gitignore', '!.npmignore', '!spec', '!*.yml'],
         build_docs = "doc",
         // destination of the build task
         build_dest = 'built',
@@ -22,7 +22,7 @@ module.exports = function (grunt) {
         // used for banner ignore files in built
         ignore_files = ['built/.gitignore', 'built/.npmignore', 'built/.*.yml'],
         //used for backup process
-        all_backup_files = ['*/**', '*','.*.yml', '.*nore'],
+        all_backup_files = ['*/**', '*','.*.yml', '.*nore', '!built'],
         backup_dest = '.tmp/backup',
         
         
