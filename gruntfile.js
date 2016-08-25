@@ -4,10 +4,10 @@ module.exports = function (grunt) {
     // ---------------------- CONSTANT sources  ------------------------------ //
     
     var initial_directories = ['.tmp', '.tmp/backup', 'test', 'js', 'built', 'built/docs', 'built/js'],
-        javascript_to_docs = ['js/**/*.js'],
+        javascript_to_docs = ['js/**/*.js','*.js'],
         javascript_files = ['js/**/*.js', '*.js'],
         destination_docs = ".tmp/doc",
-        all_build_files =  ['*/**', '*','.*.yml', '.*nore', '!built', '!test'],
+        all_build_files =  ['*/**', '*','.*.yml', '.*nore', '!built', '!test', '!gruntfile.js','!package.json','!.gitignore, !.npmignore', '*.yml'],
         build_docs = "built/doc",
         build_dest = 'built',
         javascript_built = ['built/js/**/*.js', 'built/*.js'],
@@ -94,12 +94,13 @@ module.exports = function (grunt) {
                                 +"#ignore grunt temporary files\n"
                                 +".tmp\n",
         
-        npmignore_text = "#ignore node modules\n" //revisar
-                                +"node_modules\n"
-                                +"#ignore grunt temporary files\n"
-                                +".tmp\n"
-                                +"#ignore git files\n"
-                                +".git\n",
+        npmignore_text = "#ignore all except what it's from built\n" 
+                                +"*\n"
+                                +"#not built\n"
+                                +"!built\n"
+                                +"built/node_modules"//revisar si los modulos de nodejs de built hay que ignorarlos o no
+
+                                
         
         indexjs_text = "\n" ,
         
@@ -271,6 +272,9 @@ module.exports = function (grunt) {
              "last-build":{
                 src:['built/*']
             },
+            git:{
+                src:['.git']
+            },
         },
         
         
@@ -320,29 +324,38 @@ module.exports = function (grunt) {
     
     
     // tasks
-    grunt.registerTask('create',
+    grunt.registerTask('create', // generates the library project
                        [
                         'mkdir', 
                         'file-creator:generate-files',
-                        
+                        'clean:git'
                         
                         
                         ]);
     
-    grunt.registerTask('check', 
+    grunt.registerTask('check', // for quick working comprobations 
                        [
                         'jshint:check',
+                        'test',
                         
                        
                         ]);
     
-    grunt.registerTask('backup', 
+    grunt.registerTask('backup', // if you want a backup
                        [
                         'clean:backup',
                         'copy:backup'
                        ]);
     
-    grunt.registerTask('build', 
+    grunt.registerTask('test', // for npm test runner
+                       [
+                        'jshint:check',
+                        'test',
+                        'jscs',
+                       
+                        ]);
+    
+    grunt.registerTask('build', // make a build, remember use dub /+/++/+++ before
                        [
                         'jshint:check', 
                         'jscs', 
