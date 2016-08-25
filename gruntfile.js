@@ -98,7 +98,7 @@ module.exports = function (grunt) {
                                 +"*\n"
                                 +"#not built\n"
                                 +"!built\n"
-                                +"built/node_modules"//revisar si los modulos de nodejs de built hay que ignorarlos o no
+                                +"built/node_modules",//revisar si los modulos de nodejs de built hay que ignorarlos o no
 
                                 
         
@@ -114,7 +114,7 @@ module.exports = function (grunt) {
                                 +' - "0.10"\n'
                                 +' - "iojs"\n'
                                 +' - "iojs-v1.0.4"\n'
-                                +'before_install:'
+                                +'before_install:\n'
                                 +' - npm install -g jasmine\n'
                                 +' - npm install -g npm\n'
                                 +' - npm install -g grunt-cli\n',
@@ -123,9 +123,9 @@ module.exports = function (grunt) {
         
         ; 
     
-    // ---------------------------------------------------------------  //
+    // ------------------- Before Grunt advises -----------------------  //
 
-        console.log(comment.html.open);
+        console.log(comment.html.open); // audrey logo
 
     
     
@@ -298,13 +298,16 @@ module.exports = function (grunt) {
                              dest: build_dest
                          },
                        ]
-              },
-            
-            
-                     
-                     
+              },                  
             },
-        
+         shell:{
+          "jasmine-CI":{
+            command:[
+              'jasmine'
+
+            ].join('&&')
+            }
+          },
      
 
        
@@ -320,7 +323,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    
+    grunt.loadNpmTasks('grunt-shell');
     
     
     // tasks
@@ -328,7 +331,7 @@ module.exports = function (grunt) {
                        [
                         'mkdir', 
                         'file-creator:generate-files',
-                        'clean:git'
+                        //'clean:git'
                         
                         
                         ]);
@@ -350,8 +353,8 @@ module.exports = function (grunt) {
     grunt.registerTask('test', // for npm test runner
                        [
                         'jshint:check',
-                        'test',
                         'jscs',
+                        'shell:jasmine-CI',
                        
                         ]);
     
