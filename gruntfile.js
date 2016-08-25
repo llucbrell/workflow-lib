@@ -559,7 +559,7 @@ module.exports = function (grunt) {
                        [
                         'mkdir', 
                         'file-creator:generate-files',
-                        //'clean:git'                                              
+                        'clean:git'                                              
                         ]);
     
     grunt.registerTask('work', // for quick working comprobations 
