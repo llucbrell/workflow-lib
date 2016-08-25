@@ -3,22 +3,23 @@ module.exports = function (grunt) {
     
     // ---------------------- CONSTANT sources  ------------------------------ //
     
-    var initial_directories = ['.tmp', '.tmp/backup', 'test', 'js', 'built', 'doc', 'built/js', 'spec', 'spec/support'],
+    var initial_directories = ['.tmp', '.tmp/backup', '.tmp/doc/', 'test', 'js', 'built',  'built/js', 'built/doc', 'spec', 'spec/support'],
         // javascripts parsed for documentation
         javascript_to_docs = ['js/**/*.js','*.js'],
-        //documentation destination
-        destination_docs = ".tmp/doc",
         // used with jshint and jscs
         javascript_files = ['js/**/*.js', '*.js', 'test', 'test/*/**'],
         // used when copy for a built construction
-        all_build_files =  ['*/**', '*', '!built','!built/*', '!built/*/**', '!doc', '!test', '!gruntfile.js','!package.json','!.gitignore', '!.npmignore', '!spec', '!*.yml'],
-        build_docs = "doc",
+        all_build_files =  ['*/**', '*', '!built','!built/*', '!built/*/**', '!test', '!gruntfile.js','!package.json','!.gitignore', '!.npmignore', '!spec', '!*.yml'],
+        //documentation destination for temporary consult
+        destination_docs = ".tmp/doc",
+        // destination for documentation
+        build_docs = "built/doc",
         // destination of the build task
         build_dest = 'built',
         // used for banner javascripts in built
         javascript_built = ['built/js/**/*.js', 'built/*.js' ,'built/test/**/*.js', 'built/test/*.js'],
         // used for banner docs in built
-        docs_files = ['doc/**.html'],
+        docs_files = ['built/doc/*.html'],
         // used for banner ignore files in built
         ignore_files = ['built/.gitignore', 'built/.npmignore', 'built/.*.yml'],
         //used for backup process
@@ -480,6 +481,9 @@ module.exports = function (grunt) {
             },
             git:{
                 src:['.git']
+            },
+             doc:{
+                src: destination_docs
             },
         },
         
