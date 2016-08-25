@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     
     // ---------------------- CONSTANT sources  ------------------------------ //
     
-    var initial_directories = ['.tmp', '.tmp/backup', 'test', 'js', 'built', 'built/docs', 'built/js'],
+    var initial_directories = ['.tmp', '.tmp/backup', 'test', 'js', 'built', 'built/docs', 'built/js', 'spec', 'spec/support'],
         javascript_to_docs = ['js/**/*.js','*.js'],
         javascript_files = ['js/**/*.js', '*.js'],
         destination_docs = ".tmp/doc",
@@ -119,9 +119,27 @@ module.exports = function (grunt) {
                                 +' - npm install -g npm\n'
                                 +' - npm install -g grunt-cli\n',
         
+        jasmine_text = ' {\n'
+                            + '"spec_dir": "test",\n'
+                            + '"spec_files": \n['
+                            + '"**/*[sS]pec.js"\n'
+                            + ' ],\n'
+                            + '"helpers": [\n'
+                            + '"helpers/**/*.js"'
+                            + '  ]\n'
+                            + '}\n',
+        
+        test_text = 'describe("A library test", function() {\n'
+                            + '  it("contains spec with an expectation", function() {\n'
+                            + '    expect(true).toBe(true);\n'
+                            + '  });\n'
+                            + '});\n',
+
+    
         check_text = "\n"; 
     
-   
+ 
+  
     // ---------------------- GRUNT CONFIG TASKS ---------------------  //
     grunt.initConfig({
         
@@ -166,7 +184,16 @@ module.exports = function (grunt) {
                 ".travis.yml": function(fs, fd, done) {
                     fs.writeSync(fd, travis_text);
                     done();
-              }
+              },
+                 "jasmine.json": function(fs, fd, done) {
+                    fs.writeSync(fd, jasmine_text);
+                    done();
+              },
+                "test1.spec.js": function(fs, fd, done) {
+                    fs.writeSync(fd, test_text);
+                    done();
+              },
+                
             },
              // second use.. generate more files when it's demand 
             "gen":{
