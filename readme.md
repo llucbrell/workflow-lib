@@ -1,11 +1,11 @@
-[comment]: <> (example of image -->   ![](https://raw.githubusercontent.com/llucbrell/audrey2/master/audrey.png)   )
-[comment]: <> (example of Travis build integration -->[![Build Status](https://travis-ci.org/llucbrell/audrey2.svg?branch=master)](https://travis-ci.org/llucbrell/audrey2)    )
-[comment]: <> (example of Tittle)
+[//]: <> (example of image -->   ![](https://raw.githubusercontent.com/llucbrell/audrey2/master/audrey.png)   )
+[//]: <> (example of Travis build integration -->[![Build Status](https://travis-ci.org/llucbrell/audrey2.svg?branch=master)](https://travis-ci.org/llucbrell/audrey2)    )
+[//]: <> (example of Tittle)
 #Workflow-lib Grunt Template
-[comment]: <> (example of h2)
+[//]: <> (example of h2)
 #Quick start and work for codding libraries
 
-[comment]: <> (example of text)
+[//]: <> (example of text)
 For running workflow-lib you must to ensure you know how to work with nodejs, npm and grunt. To start, clone the repository and inicialize some of the dependencies
 ## Building
 Download the code
