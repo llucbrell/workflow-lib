@@ -119,9 +119,7 @@ module.exports = function (grunt) {
                                 +' - npm install -g npm\n'
                                 +' - npm install -g grunt-cli\n',
         
-        check_text = "\n"
-        
-        ; 
+        check_text = "\n"; 
     
    
     // ---------------------- GRUNT CONFIG TASKS ---------------------  //
@@ -130,6 +128,7 @@ module.exports = function (grunt) {
         // to use properties of the project guided by package.json file
         pkg: grunt.file.readJSON('package.json'),
         
+//                      CREATE DIRECTORIES TASKS 
         // building project principal structure
         mkdir: {
             all: {
@@ -139,6 +138,7 @@ module.exports = function (grunt) {
             }
         },
         
+//                      FILE GENERATOR
         // building project files  index.js, travis, readme, license, gitignore, npmignore   
         
           "file-creator": {
@@ -177,6 +177,7 @@ module.exports = function (grunt) {
             }
           },
         
+//                      DOCUMENT GENERATOR
         // Documentation generation
         
         jsdoc:{
@@ -197,6 +198,7 @@ module.exports = function (grunt) {
             }
         },
         
+//                      JAVASCRIPT LINT
         // lint javascript files
         
         jshint:{
@@ -207,6 +209,7 @@ module.exports = function (grunt) {
             }
         },
         
+//                      JAVASCRIPT STYLES
         //styling javascript files
         
         jscs: {
@@ -219,6 +222,7 @@ module.exports = function (grunt) {
             }
         },
         
+//                      BANNERS GENERATOR
         // create banners for the project
        
         usebanner: {
@@ -257,7 +261,7 @@ module.exports = function (grunt) {
             
         },
            
-                     
+//                      CLEAN TASK
         // clean temporary files before make building
                      
         clean:{
@@ -273,9 +277,10 @@ module.exports = function (grunt) {
         },
         
         
-        
-        // make a backup to avoid problems
+//                      COPY TASKS 
+
           copy: {
+              // make a backup to avoid problems
               "backup": {
                 files: [ 
                          {
@@ -285,6 +290,7 @@ module.exports = function (grunt) {
                          },
                        ]
               },
+              // copy files for building
               "build": {
                 files: [ 
                          {
@@ -296,10 +302,12 @@ module.exports = function (grunt) {
               },                  
             },
         
+//                      SHELL TASKS 
         // shell commands for linux
         
          shell:{
-          "jasmine-CI":{
+             // run jasmine tests
+          "jasmine-global":{
             command:[
               'jasmine'
 
@@ -341,17 +349,13 @@ module.exports = function (grunt) {
                        [
                         'mkdir', 
                         'file-creator:generate-files',
-                        //'clean:git'
-                        
-                        
+                        //'clean:git'                                              
                         ]);
     
-    grunt.registerTask('check', // for quick working comprobations 
+    grunt.registerTask('work', // for quick working comprobations 
                        [
                         'jshint:check',
-                        'test',
-                        
-                       
+                        'shell:jasmine-global', 
                         ]);
     
     grunt.registerTask('backup', // if you want a backup
@@ -364,19 +368,18 @@ module.exports = function (grunt) {
                        [
                         'jshint:check',
                         'jscs',
-                        'shell:jasmine-CI',
-                       
+                        'shell:jasmine-global',                       
                         ]);
     
     grunt.registerTask('build', // make a build, remember use dub /+/++/+++ before
                        [
                         'jshint:check', 
                         'jscs', 
+                        'shell:jasmine-global',
                         'clean:last-build',
                         'jsdoc:dev-build',
                         'copy:build',                      
                         'usebanner'
-                        
                        ]);
 
 };
