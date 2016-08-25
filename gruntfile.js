@@ -195,7 +195,7 @@ module.exports = function (grunt) {
                             +"```js\n"
                             +"git clone \n"
                             +"/* you can ignore the next two lines\n"
-                            +"if you have already installed */"
+                            +"if you have already installed */ \n"
                             +"npm install -g grunt cli\n"
                             +"npm install -g jasmine\n"
                             +"```\n"
