@@ -175,7 +175,7 @@ module.exports = function (grunt) {
     // --------------------- TEXT files values ------------------------------- //
         
         readme_text = "[comment]: <> (example of image -->   ![](https://raw.githubusercontent.com/llucbrell/audrey2/master/audrey.png)   )" 
-                             +"##Workflow-lib\n"
+                             +"#Workflow-lib\n"
                              +"For running workflow-lib you must to ensure you know how to work with nodejs, npm and grunt. To start, clone the repository and inicialize some of the dependencies\n"
                              + "## Building\n"
                             +"Download the code\n"
