@@ -71,7 +71,7 @@ module.exports = function (grunt) {
     
     // ---------------------- CONSTANT sources  ------------------------------ //
     
-    var initial_directories = ['.tmp', '.backup', '.tmp/replacements', '.tmp/built' 'test', 'js', 'doc', 'spec', 'spec/support'],
+    var initial_directories = ['.tmp', '.backup', '.tmp/replacements', '.tmp/built', 'test', 'js', 'doc', 'spec', 'spec/support'],
         // used with jshint and jscs
         javascript_files = ['js/**/*.js', '*.js', 'test', 'test/*/**'],
         // javascripts parsed for documentation
