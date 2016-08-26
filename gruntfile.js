@@ -1,4 +1,6 @@
-/*
+/*YEEEEEEEEAH
+
+
        dP                dP       dP                                                 dP         
        88                88       88                                                 88         
        88d888b. .d8888b. 88d888b. 88d888b. .d8888b. .d8888b. .d8888b. .d8888b. .d888b88 .d8888b.
@@ -53,14 +55,29 @@
                 t          .ifi:::;:;1fft11if;L11LLf1itC8fi 
                    ;  C8LttttCCLttttttttG1ft1f       
                    :         t                     
-                  ;         ;                 Project  >      workflow-lib
-                 L        t                   Version  >      0.0.1
-               C       t                      Author   >      llucbrell/Lucas_C
+                  ;         ;                 Project  >      grunt
+                 L        t                   Version  >      1.0.1
+               C       t                      Author   >      [object Object]
                  8    C                       License  >      MIT
                  ;Ct                          Date     >      2016-08-26
 
-       Workflow build with grunt and nodejs for a better build libraries.
+       The JavaScript Task Runner
  HOBBES_HEADER*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -94,9 +111,9 @@ module.exports = function (grunt) {
         all_backup_files = ['*/**', '*','.*.yml', '.*nore', '!built'],
         backup_dest = '.tmp/backup',
         //files to be excluded for root final replacement
-        exclude_clean = ['*', '.*', '*.*' , '!.git', '.git/*', '!.git/**/*', '!.tmp', '!.tmp/*', '!.tmp/**/*', '!.backup', '!.backup/*', '!.backup/**/*', '!doc','!doc/*', '!doc/**/*'],
+        exclude_clean = ['*', '.*', '*.*' , '!.build.sh', '!.git', '.git/*','!.git/**/*', '!.tmp', '!.tmp/*', '!.tmp/**/*', '!.backup', '!.backup/*', '!.backup/**/*', '!doc','!doc/*', '!doc/**/*'],
         //used for restore data
-        project_temp_sources = ['!.tmp/built','!.tmp/built/*', '!.tmp/built/**/*', '!.tmp/replacements','!.tmp/replacements/*', '!.tmp/replacements/**/*'],
+        project_temp_sources = ['.tmp/built','.tmp/built/*', '.tmp/built/**/*', '.tmp/replacements/*', '.tmp/replacements/**/*'],
 
         
         
@@ -585,9 +602,12 @@ module.exports = function (grunt) {
               "restore": {
                 files: [ 
                          {
-                             expand: true, 
+                             expand:true,
+                             filter: 'isFile',
+                             //flatten:true,
+                             cwd: '', 
                              src: project_temp_sources , 
-                             dest: './'
+                             dest: 'flat'
                          },
                        ]
               },           
@@ -603,7 +623,15 @@ module.exports = function (grunt) {
               'jasmine'
 
             ].join('&&')
-            }
+            },
+            
+             // build root
+          "copy-root":{
+            command:[
+              'bash ./.build.sh'
+
+            ].join('&&')
+            },
           },
      
         
@@ -708,7 +736,7 @@ module.exports = function (grunt) {
                         'copy:build',
                         'string-replace:banners',
                         'clean:root',
-                        'copy:restore'
+                        'shell:copy-root',
                        ]);
 
     grunt.registerTask('update', // update banners with new version
