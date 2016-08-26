@@ -67,23 +67,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 module.exports = function (grunt) {
     
     // ---------------------- CONSTANT sources  ------------------------------ //
@@ -694,7 +677,7 @@ module.exports = function (grunt) {
                         'file-creator:generate-files',
                         'usebanner:create-javascript-banners',
                         'usebanner:create-javascript-foot-banners',        
-                        //'clean:git'                                              
+                        'clean:git'                                              
                         ]);
     
     grunt.registerTask('scaffold', // generates the library project
