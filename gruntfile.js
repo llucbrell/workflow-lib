@@ -1,4 +1,4 @@
-/*YEEEEEEEEAH
+/*
 
 
        dP                dP       dP                                                 dP         
@@ -96,7 +96,7 @@ module.exports = function (grunt) {
         //files to be excluded for root final replacement
         exclude_clean = ['*', '.*', '*.*' , '!.build.sh', '!.git', '.git/*','!.git/**/*', '!.tmp', '!.tmp/*', '!.tmp/**/*', '!.backup', '!.backup/*', '!.backup/**/*', '!doc','!doc/*', '!doc/**/*'],
         //used for restore data
-        project_temp_sources = ['.tmp/built','.tmp/built/*', '.tmp/built/**/*', '.tmp/replacements/*', '.tmp/replacements/**/*'],
+        project_temp_sources = ['.tmp/built','.tmp/built/*', '.tmp/built/*.*', '.tmp/built/.*.*','.tmp/built/**/*', '.tmp/replacements/*', '.tmp/replacements/**/*'],
 
         
         
@@ -256,7 +256,7 @@ module.exports = function (grunt) {
 +"         fGG.       if                ;C;                              \n" 
 +"         100GG00C;,Ct;:.           .0f,if1                             \n" 
 +"        .G0CGG08L000:GL.            :C.                                \n" 
-+"        10G  ,1CG00GG:               .Ci       \n",
++"        10G  ,1CG00GG:               .Ci       \n HOBBES_FOOTER",
     
         
     // --------------------- TEXT files values ------------------------------- //
@@ -636,10 +636,11 @@ module.exports = function (grunt) {
             options: {
               replacements: [{
                 pattern: /\/\*[\s\S]*HOBBES_HEADER\*\//, //match fro everything betweeen /* and ***/
-                replacement: comment.jscss.open + 'YEEEEEEEEAH\n\n' + header_logo + created_info + comment.jscss.close + break_lines,
+                replacement: comment.jscss.open + header_logo + created_info + comment.jscss.close + break_lines,
               }]
             }
-          }
+          },
+      
         },
 
 
@@ -680,13 +681,6 @@ module.exports = function (grunt) {
                         'clean:git'                                              
                         ]);
     
-    grunt.registerTask('scaffold', // generates the library project
-                       [
-                        'mkdir', 
-                        'file-creator:generate-files',
-                        //'clean:git'                                              
-                        ]);
-    
     grunt.registerTask('work', // for quick working comprobations 
                        [
                         'jshint:check',
@@ -722,15 +716,7 @@ module.exports = function (grunt) {
                         'shell:copy-root',
                        ]);
 
-    grunt.registerTask('update', // update banners with new version
-                       [
-                        'jshint:check', 
-                        'jscs', 
-                        'shell:jasmine-global',
-                        'clean:tmp',
-                        //'jsdoc:dev-build',                      
-                        'string-replace:banners'
-                       ]);
+    
 
 
 };
