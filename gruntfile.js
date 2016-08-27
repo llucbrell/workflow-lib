@@ -1,11 +1,13 @@
 
 
 
+
+
 module.exports = function (grunt) {
     
     // ---------------------- CONSTANT sources  ------------------------------ //
     
-    var initial_directories = ['.tmp', '.backup', '.tmp/replacements', '.tmp/built', 'test', 'js', 'doc', 'spec', 'spec/support'],
+    var initial_directories = ['.tmp', '.backup', '.tmp/replacements', '.tmp/built', 'test', 'js', 'doc', 'doc/.module', 'spec', 'spec/support'],
         // used with jshint and jscs
         javascript_files = ['js/**/*.js', '*.js', 'test', 'test/*/**'],
         // javascripts parsed for documentation
@@ -17,7 +19,7 @@ module.exports = function (grunt) {
         // destination of the build task
         build_dest = '.tmp/built',
         // used when copy for a built construction
-        all_build_files =  ['**/*', '**' , '.*', '!.git','!.git/*', '!.git/**/*','!js', '!js/**/*', '!js/*' ,'!*.js', '!test','!test/*', '!test/**/*',  '!doc','!doc/*', '!doc/**/*', '!.tmp','!.tmp/*', '!.tmp/**/*', '!.backup','!.backup/*', '!.backup/**/*', ],
+        all_build_files =  ['**/*', '**' , '.*', '**/.*', '.**/.*', '!.git','!.git/*', '!.git/**/*','!js', '!js/**/*', '!js/*' ,'!*.js', '!test','!test/*', '!test/**/*',  '!doc','!doc/*', '!doc/**/*', '!.tmp','!.tmp/*', '!.tmp/**/*', '!.backup','!.backup/*', '!.backup/**/*', ],
         // used for banner javascripts in built
         javascript_built = ['js/**/*.js', '*.js' ,'test/**/*.js', 'test/*.js'],
         // used for banner docs in built
@@ -28,7 +30,7 @@ module.exports = function (grunt) {
         all_backup_files = ['*/**', '*','.*.yml', '.*nore', '!built'],
         backup_dest = '.tmp/backup',
         //files to be excluded for root final replacement
-        exclude_clean = ['*', '.*', '*.*' , '!.build.sh', '!.git', '.git/*','!.git/**/*', '!.tmp', '!.tmp/*', '!.tmp/**/*', '!.backup', '!.backup/*', '!.backup/**/*', '!doc','!doc/*', '!doc/**/*'],
+        exclude_clean = ['*', '.*', '*.*' , '!.build.sh', '!.scripts' ,'!.git', '.git/*','!.git/**/*', '!.tmp', '!.tmp/*', '!.tmp/**/*', '!.backup', '!.backup/*', '!.backup/**/*', '!doc','!doc/*', '!doc/**/*'],
         //used for restore data
         project_temp_sources = ['.tmp/built','.tmp/built/*', '.tmp/built/*.*', '.tmp/built/.*.*','.tmp/built/**/*', '.tmp/replacements/*', '.tmp/replacements/**/*'],
 
@@ -545,11 +547,26 @@ module.exports = function (grunt) {
              // build root
           "copy-root":{
             command:[
-              'bash ./.build.sh'
+              'bash .scripts/build.sh'
 
             ].join('&&')
             },
+            // bypass the jsdoc bug
+            "copy-doc-mod":{
+            command:[
+              'bash .scripts/create.sh'
+
+            ].join('&&')
+            },
+            "restore-doc":{
+            command:[
+              'bash .scripts/restore_doc.sh'
+
+            ].join('&&')
+            },
+
           },
+          
      
         
         
@@ -611,7 +628,8 @@ module.exports = function (grunt) {
                         'mkdir', 
                         'file-creator:generate-files',
                         'usebanner:create-javascript-banners',
-                        'usebanner:create-javascript-foot-banners',        
+                        'usebanner:create-javascript-foot-banners',
+                        'shell:copy-doc-mod',       
                         'clean:git'                                              
                         ]);
     
@@ -619,7 +637,16 @@ module.exports = function (grunt) {
                        [
                         'jshint:check',
                         'shell:jasmine-global', 
+
                         ]);
+
+    grunt.registerTask('doc', // for quick working comprobations 
+                       [
+                        'shell:restore-doc',
+                        'jsdoc:dev-build',                     
+
+                        ]);
+    
     
     grunt.registerTask('backup', // if you want a backup
                        [
@@ -639,6 +666,7 @@ module.exports = function (grunt) {
                         'jshint:check', 
                         'jscs', 
                         'shell:jasmine-global',
+                        'shell:restore-doc',
                         'jsdoc:dev-build',
                         'usebanner:create-docs-header-ban',
                         'usebanner:create-docs-footer-ban',
@@ -653,5 +681,8 @@ module.exports = function (grunt) {
 
 
 };
+
+
+
 
 
