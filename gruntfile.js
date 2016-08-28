@@ -38,8 +38,6 @@ module.exports = function (grunt) {
     // ---------------------- CONSTANT task options -------------------------- //
 
         jshint_rules = {
-                    // indentation output
-                        indent: 4,
                     // enforcement options
                         curly: true, // all loops with curly braces
                         eqeqeq: true, // prohibited use of == and != instead use === and !== 
@@ -56,7 +54,7 @@ module.exports = function (grunt) {
                     // Relaxing options
                         laxbreak: true, // use a break-line more laxe
                     // Environment
-                        browser: true, // jshint knows standard javascript globals from the browser (document.window, etc.,)
+                        //browser: true, // jshint knows standard javascript globals from the browser document window, etc., jshint already knows
                         //browserify:  true // used with browserify tool of npm --> for front end dev
                         jasmine: true, // globals for jassmine
                         //mocha: true, //mocha globals
@@ -65,14 +63,17 @@ module.exports = function (grunt) {
                         node: true, // glob for node
                         //phantom: true, //globals for phantom
                         predef: [], // extra globals
-
                        },
-        
+        jscs_rules ={config: '.jscsrc'},
         
     // ---------------------- BANNER strings -------------------------------- //
       
         comment = {html:{open: "<!--", close: "-->"},jscss:{open: "/*", close: "*/"}, sharp:{open:"#"}, js:{open:"//"}},
         break_lines = "\n\n\n",               
+
+        
+        
+
         
         
         
@@ -427,16 +428,17 @@ module.exports = function (grunt) {
         
 //                      JAVASCRIPT STYLES
         //styling javascript files
-        
+
         jscs: {
-            src: javascript_files,
-                options: { //configurar bien
-                    config: ".jscsrc",
-                    //esnext: true, // If you use ES6 http://jscs.info/overview.html#esnext 
-                    fix: true, // Autofix code style violations when possible. 
-                    requireCurlyBraces: [ "if" ]
+            main: "app.js",
+            controllers: {
+                src: javascript_files,
+                options: jscs_rules
             }
-        },
+            // You can add more configurations over here
+      },
+
+        
         
 //                      BANNERS GENERATOR
         // create banners for the project
