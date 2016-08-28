@@ -10,6 +10,7 @@ module.exports = function (grunt) {
     var initial_directories = ['.tmp', '.backup', '.tmp/replacements', '.tmp/built', 'test', 'js', 'doc', 'doc/.module', 'spec', 'spec/support'],
         // used with jshint and jscs
         javascript_files = ['js/**/*.js', '*.js', 'test', 'test/*/**'],
+        exclude_gruntfile = ['js/**/*.js', '*.js', 'test', 'test/*/**', '!gruntfile.js'],
         // javascripts parsed for documentation
         javascript_to_docs = ['js/**/*.js','*.js'],
         //documentation destination for temporary consult
@@ -433,23 +434,12 @@ module.exports = function (grunt) {
 
         jscs: {
             main: {
-                src: javascript_files,
+                src: exclude_gruntfile,
                 options: jscs_rules
             }
             // You can add more configurations over here
       },
 
-        /*
-        jscs: {
-            src: javascript_files,
-                options: { //configurar bien
-                    config: ".jscsrc",
-                    //esnext: true, // If you use ES6 http://jscs.info/overview.html#esnext 
-                    //fix: true, // Autofix code style violations when possible. 
-                    requireCurlyBraces: [ "if" ],
-
-            }
-        },*/
         
 //                      BANNERS GENERATOR
         // create banners for the project

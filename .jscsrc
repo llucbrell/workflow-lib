@@ -1,0 +1,75 @@
+{
+    "requireCurlyBraces": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "try",
+        "catch"
+    ],
+    "requireSpaceAfterKeywords": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "switch",
+        "case",
+        "return",
+        "try",
+        "catch",
+        "function",
+        "typeof"
+    ],
+    "disallowSpaceBeforeComma": true,
+    "requireSpaceBeforeBlockStatements": true,
+    "disallowTrailingComma": true,
+    "requireSpacesInNamedFunctionExpression": {
+        "beforeOpeningRoundBrace": true,
+        
+        "beforeOpeningCurlyBrace": true
+    },
+    "requireSpacesInsideArrayBrackets": {
+        "allExcept": [ "[", "]", "{", "}" ]
+    },
+
+    "requireSpacesInsideBrackets": {
+        "allExcept": [ "[", "]", "{", "}" ]
+    },
+
+    "requireSpacesInsideImportedObjectBraces": true,
+    "requireSpacesInsideObjectBrackets": {
+        "allExcept": [ "}", ")" ]
+    },
+    "requireSpacesInsideParentheses": {
+        "all": true,
+        "except": [ "{", "}", "\"" ]
+    },
+    "requireSpacesInsideParenthesizedExpression": {
+        "allExcept": [ "{", "}" ]
+    },
+    "disallowCurlyBraces": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "switch",
+        "case",
+        "return",
+        "try",
+        "catch",
+        "function",
+        "typeof"
+    ],
+    "disallowNewlineBeforeBlockStatements": true,
+    "requireCamelCaseOrUpperCaseIdentifiers": {"allExcept": [ ]},
+    "maximumLineLength": { "value": 110, "allExcept": [ "functionSignature", "commentSignature" ] },
+    "jsDoc": {
+        "checkAnnotations": "jsdoc3",
+        "checkTypes": "strictNativeCase",
+        "enforceExistence": "exceptExports"
+    },
+    "requireArrowFunctions": true,
+}
