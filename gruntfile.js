@@ -67,7 +67,7 @@ module.exports = function (grunt) {
 +"               C       t                      Author   >      <%= pkg.author %>\n"         
 +"                 8    C                       License  >      <%= pkg.license %>\n"
 +"                 ;Ct                          Date     >      <%= grunt.template.today('yyyy-mm-dd') %>\n\n"
-+"       <%= pkg.description %>\n HOBBES_HEADER",
++"       <%= pkg.description %>\n HHEADER",
 
   
         
@@ -89,7 +89,7 @@ module.exports = function (grunt) {
 
 
         
-        header_logo = "\n"    
+        header_logo = "HHEADER\n"    
 +"       dP                dP       dP                                                 dP         \n" 
 +"       88                88       88                                                 88         \n" 
 +"       88d888b. .d8888b. 88d888b. 88d888b. .d8888b. .d8888b. .d8888b. .d8888b. .d888b88 .d8888b.\n" 
@@ -144,7 +144,7 @@ module.exports = function (grunt) {
 +"                   :         t                     \n",
     
     
-            logo_footer = "\n"
+            logo_footer = "HFOOTER\n"
 +"888               888       888                                                       888     \n" 
 +"888               888       888                                                       888      \n"
 +"888               888       888                                                       888       \n"
@@ -192,7 +192,7 @@ module.exports = function (grunt) {
 +"         fGG.       if                ;C;                              \n" 
 +"         100GG00C;,Ct;:.           .0f,if1                             \n" 
 +"        .G0CGG08L000:GL.            :C.                                \n" 
-+"        10G  ,1CG00GG:               .Ci       \n HOBBES_FOOTER",
++"        10G  ,1CG00GG:               .Ci       \n HFOOTER",
     
         
     // --------------------- TEXT files values ------------------------------- //
@@ -586,9 +586,14 @@ module.exports = function (grunt) {
                 }],
             options: {
               replacements: [{
-                pattern: /\/\*[\s\S]*HOBBES_HEADER\*\//, //match fro everything betweeen /* and ***/
+                pattern: /\/\*\HHEADER[\s\S]*HHEADER\*\//, //match for everything betweeen /* and for header */
                 replacement: comment.jscss.open + header_logo + created_info + comment.jscss.close + break_lines,
-              }]
+              }, 
+                {
+                pattern: /\/\*\HFOOTER[\s\S]*HFOOTER\*\//, //match for anything between /* and for footer */
+                replacement: break_lines + comment.jscss.open + logo_footer + comment.jscss.close,
+
+            },]
             }
           },
       
