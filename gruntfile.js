@@ -24,8 +24,6 @@ module.exports = function (grunt) {
         javascript_built = ['js/**/*.js', '*.js' ,'test/**/*.js', 'test/*.js'],
         // used for banner docs in built
         docs_files = ['doc/*.html'],
-        // used for banner ignore files in built
-        ignore_files = ['built/.gitignore', 'built/.npmignore', 'built/.*.yml'],
         //used for backup process
         all_backup_files = ['*/**', '*','.*.yml', '.*nore', '!built'],
         backup_dest = '.tmp/backup',
@@ -39,25 +37,43 @@ module.exports = function (grunt) {
         
     // ---------------------- CONSTANT task options -------------------------- //
 
-        jshint_rules = {laxbreak: true},
+        jshint_rules = {
+                    // indentation output
+                        indent: 4,
+                    // enforcement options
+                        curly: true, // all loops with curly braces
+                        eqeqeq: true, // prohibited use of == and != instead use === and !== 
+                        esversion: 5, // version of the javascript 3 older-brows, 5 ecmascript 5, 6 ecmascript 6
+                        //forin: true, // obligate to filter in the use of for in
+                        latedef: true, // not use of variables before declarations
+                        noarg: true, // no use of arguments.calle and callee
+                        nonew: true, // not call the constructor outside of a variable -- or side-effects
+                        //pluplus: true // don't use of ++ and -- in the code
+                        //undef: true // advise of undefined variables -- use global statement for variables in other files
+                        //strict: true // there must be strict in function level, ('global' for strict in global)
+                        unused: true, // advise if not uses some of your variables
+                        //shadow: true // allow variable shadowing (var declared inside and outside a function)
+                    // Relaxing options
+                        laxbreak: true, // use a break-line more laxe
+                    // Environment
+                        browser: true, // jshint knows standard javascript globals from the browser (document.window, etc.,)
+                        //browserify:  true // used with browserify tool of npm --> for front end dev
+                        jasmine: true, // globals for jassmine
+                        //mocha: true, //mocha globals
+                        //qunit: true, // globals for qunit
+                        //jquery: true, // globals for jquery -->front end
+                        node: true, // glob for node
+                        //phantom: true, //globals for phantom
+                        predef: [], // extra globals
+
+                       },
         
         
     // ---------------------- BANNER strings -------------------------------- //
       
         comment = {html:{open: "<!--", close: "-->"},jscss:{open: "/*", close: "*/"}, sharp:{open:"#"}, js:{open:"//"}},
-        spaces = "                         ",       
-        spaces2 = "       ",        
         break_lines = "\n\n\n",               
-        separator = "// ------------------------------------------------------------------ // \n",
-        texted_separator = "// ------------------------- <%= pkg.name %> -------------------------- // ",
-
         
-        //created_info = spaces2 +texted_separator+ '\n'+ spaces2 + '   <%= pkg.description %> \n' +'\n' +  spaces + 'author: <%= pkg.author %> \n' + spaces + 'version: <%= pkg.version %> \n' + spaces + 'built-date: <%= grunt.template.today("yyyy-mm-dd") %> \n'  +spaces + 'license: <%= pkg.license %> \n'+'\n'+spaces2 + separator +'\n',
-        
-
-        last_built = '<%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> - v<%= pkg.version %> - ',
-        
-        ig_header = spaces2 +texted_separator+ '\n#\n#'+ spaces2 + '   <%= pkg.description %> \n#' +'\n#' +  spaces + 'author: <%= pkg.author %> \n#' + spaces + 'start-date: <%= grunt.template.today("yyyy-mm-dd") %> \n#'  +spaces + 'license: <%= pkg.license %> \n#'+'\n#'+spaces2 + separator +'\n',
         
         
             // ------- LOGOS data construction  ------- //
