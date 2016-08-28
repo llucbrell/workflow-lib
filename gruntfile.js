@@ -62,6 +62,8 @@ module.exports = function (grunt) {
                         //jquery: true, // globals for jquery -->front end
                         node: true, // glob for node
                         //phantom: true, //globals for phantom
+                    // for variables
+                        //undef:true, //for undefined values, at this moment disabled
                         predef: [], // extra globals
                        },
         jscs_rules ={config: '.jscsrc'},
@@ -430,15 +432,24 @@ module.exports = function (grunt) {
         //styling javascript files
 
         jscs: {
-            main: "app.js",
-            controllers: {
+            main: {
                 src: javascript_files,
                 options: jscs_rules
             }
             // You can add more configurations over here
       },
 
-        
+        /*
+        jscs: {
+            src: javascript_files,
+                options: { //configurar bien
+                    config: ".jscsrc",
+                    //esnext: true, // If you use ES6 http://jscs.info/overview.html#esnext 
+                    //fix: true, // Autofix code style violations when possible. 
+                    requireCurlyBraces: [ "if" ],
+
+            }
+        },*/
         
 //                      BANNERS GENERATOR
         // create banners for the project
