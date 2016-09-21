@@ -40,7 +40,7 @@ module.exports = function (grunt) {
 
         jshint_rules = {
                     // enforcement options
-                        curly: true, // all loops with curly braces
+                        //curly: true, // all loops with curly braces
                         eqeqeq: true, // prohibited use of == and != instead use === and !== 
                         esversion: 5, // version of the javascript 3 older-brows, 5 ecmascript 5, 6 ecmascript 6
                         //forin: true, // obligate to filter in the use of for in
