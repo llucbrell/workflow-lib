@@ -1,13 +1,5 @@
 {
-    "requireCurlyBraces": [
-        "if",
-        "else",
-        "for",
-        "while",
-        "do",
-        "try",
-        "catch"
-    ],
+  
     "requireSpaceAfterKeywords": [
         "if",
         "else",
@@ -65,11 +57,5 @@
     ],
     "disallowNewlineBeforeBlockStatements": true,
     "requireCamelCaseOrUpperCaseIdentifiers": {"allExcept": [ ]},
-    "maximumLineLength": { "value": 110, "allExcept": [ "functionSignature", "commentSignature" ] },
-    "jsDoc": {
-        "checkAnnotations": "jsdoc3",
-        "checkTypes": "strictNativeCase",
-        "enforceExistence": "exceptExports"
-    },
-    "requireArrowFunctions": true,
+
 }
